@@ -1,0 +1,133 @@
+﻿<Controls:MetroWindow x:Class="MacroNutrientes.Apresentation.Wpf.Views.RefeicoesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:local="clr-namespace:MacroNutrientes.Apresentation.Wpf"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Converter="clr-namespace:MacroNutrientes.Apresentation.Wpf.Views.Converters"                     
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto" 
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Registrar refeições" Height="650" Width="850" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <!--<Converter:StringToNumericConverter x:Key="Converters"></Converter:StringToNumericConverter>-->
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Data"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Refeição"/>
+            <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Alimento"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Peso"/>
+            <DatePicker Grid.Row="0" Grid.Column="1" IsEnabled="{Binding EditarRefeicao}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" FontSize="15"/>
+            <ComboBox Grid.Row="0" Grid.Column="3" IsEnabled="{Binding EditarRefeicao}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" FontSize="15">
+                <ComboBoxItem Content="Café da manhã"/>
+                <ComboBoxItem Content="Almoço"/>
+                <ComboBoxItem Content="Café da tarde"/>
+                <ComboBoxItem Content="Jantar"/>
+                <ComboBoxItem Content="Café da noite"/>
+                <ComboBoxItem Content="Avulso"/>
+            </ComboBox>
+            <ComboBox Grid.Row="0" Grid.Column="5" ItemsSource="{Binding ListarTodosAlimentos}" IsEnabled="{Binding EditarRefeicao}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" FontSize="15"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Margin="5" Text="{Binding View.Peso, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Peso"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Proteína"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Carboidrato"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Gordura"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Caloria"/>
+            <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="5" Text="{Binding View.Proteina, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Proteína" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+            <TextBox Grid.Row="0" Grid.Column="3" IsEnabled="False" Margin="5" Text="{Binding View.Carboidrato, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Carboidrato"/>
+            <TextBox Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="5" Text="{Binding View.Gordura, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Gordura"/>
+            <TextBox Grid.Row="1" Grid.Column="3" IsEnabled="False" Margin="5" Text="{Binding View.Caloria, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Caloria"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <DataGrid SelectedItem="{Binding View}" ItemsSource="{Binding ListaRefeicao}" BorderThickness="3" BorderBrush="Black" GridLinesVisibility="All" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Data" Binding="{Binding DataRefeicao,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Refeição" Binding="{Binding Refeicao,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Alimento" Binding="{Binding Alimento,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Peso" Binding="{Binding Peso,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Proteína" Binding="{Binding Proteina,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Carboidrato" Binding="{Binding Carboidrato,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Gordura" Binding="{Binding Gordura,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Caloria" Binding="{Binding Caloria,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Proteína"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Carboidrato"/>
+            <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Gordura" />
+            <TextBlock Grid.Row="0" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Caloria" />
+            <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="5" Text="{Binding View.Proteina, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Proteína" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+            <TextBox Grid.Row="0" Grid.Column="3" IsEnabled="False" Margin="5" Text="{Binding View.Carboidrato, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Carboidrato"/>
+            <TextBox Grid.Row="0" Grid.Column="5" IsEnabled="False" Margin="5" Text="{Binding View.Gordura, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" materialDesign:HintAssist.Hint="Gordura"/>
+            <TextBox Grid.Row="0" Grid.Column="7" IsEnabled="False" Margin="5" Text="{Binding View.Caloria, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged , StringFormat=N2}" materialDesign:HintAssist.Hint="Caloria"/>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="INCLUIR" Margin="5" ToolTip="Incluir dados do alimento" Command="{Binding IncluirCommand}"/>
+                <Button Content="ALTERAR" Margin="5" ToolTip="Alterar dados do alimento" Command="{Binding AlterarCommand}"/>
+                <Button Content="INATIVAR" Margin="5" ToolTip="Inativar o alimento" Command="{Binding InativarCommand}"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="LIMPAR" Margin="5" ToolTip="Limpar dados da tela" Command="{Binding LimparTelaCommand}" HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

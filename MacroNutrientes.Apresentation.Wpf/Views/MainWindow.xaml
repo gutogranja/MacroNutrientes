@@ -1,0 +1,107 @@
+﻿<Controls:MetroWindow x:Class="MacroNutrientes.Apresentation.Wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:local="clr-namespace:MacroNutrientes.Apresentation.Wpf"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto" 
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="White">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="200" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="60" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="openMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="closeMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid Background="LightGray">
+        <Grid Height="60" VerticalAlignment="Top" Background="#FF1368BD">
+            <TextBlock HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center" FontSize="22">Cálculo de Macro Nutrientes</TextBlock>
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock VerticalAlignment="Center" FontSize="18"></TextBlock>
+                <materialDesign:PopupBox Margin="10" Foreground="White" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                    <StackPanel Width="150">
+                        <!--<Button>Account</Button>
+                        <Button>Settings</Button>
+                        <Button>Help</Button>
+                        <Separator></Separator>-->
+                        <Button x:Name="popUpLogoutButton" Command="{Binding SairCommand}">Sair</Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF1B3861">
+            <StackPanel>
+                <Grid Height="150" Background="White">
+                    <Button x:Name="closeMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding VisibilidadeFechar}" Command="{Binding FecharMenuCommand}">
+                        <materialDesign:PackIcon Foreground="#FF1B3861" Kind="ArrowLeft" Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="openMenuButton" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding VisibilidadeAbrir}" Command="{Binding AbrirMenuCommand}">
+                        <materialDesign:PackIcon Foreground="#FF1B3861" Kind="Menu" Width="25" Height="25"/>
+                    </Button>
+                </Grid>
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="#FF1368BD">
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="cadastrarButton" VerticalAlignment="Center" Margin="-8" HorizontalAlignment="Left" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding CadastrarAlimentosCommand}">
+                                <materialDesign:PackIcon Kind="Assignment" Width="25" Height="25" VerticalAlignment="Center"/>
+                            </Button>
+                            <TextBlock VerticalAlignment="Center">Cadastrar Alimentos</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="registrarConsumoButton" VerticalAlignment="Center" Margin="-8" HorizontalAlignment="Left" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding RegistrarRefeicoesCommand}">
+                                <materialDesign:PackIcon Kind="Pencil" Width="25" Height="25" VerticalAlignment="Center"/>
+                            </Button>
+                            <TextBlock VerticalAlignment="Center">Registrar Consumo</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <!--<ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Ticket" Width="25" Height="25" Margin="10" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <TextBlock VerticalAlignment="Center" Margin="20 10">Tickets</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Message" Width="25" Height="25" Margin="10" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <TextBlock VerticalAlignment="Center" Margin="20 10">Messages</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="GithubBox" Width="25" Height="25" Margin="10" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <TextBlock VerticalAlignment="Center" Margin="20 10">Github</TextBlock>
+                        </StackPanel>
+                    </ListViewItem>-->
+                </ListView>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
